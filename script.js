@@ -1,5 +1,8 @@
 function letterCombinations(digits) {
-  // Mapping of digit to letters
+  if (digits.length === 0) {
+    return [];
+  }
+
   const digitToLetters = {
     '2': 'abc',
     '3': 'def',
@@ -8,36 +11,28 @@ function letterCombinations(digits) {
     '6': 'mno',
     '7': 'pqrs',
     '8': 'tuv',
-    '9': 'wxyz',
+    '9': 'wxyz'
   };
 
-  // Function to generate letter combinations recursively
-  function generateCombinations(combination, digits) {
-    // Base case: if there are no more digits, add the current combination to the result
-    if (digits.length === 0) {
-      result.push(combination);
-      return;
+  const combinations = [''];
+
+  for (const digit of digits) {
+    const letters = digitToLetters[digit];
+    const newCombinations = [];
+
+    for (const combination of combinations) {
+      for (const letter of letters) {
+        newCombinations.push(combination + letter);
+      }
     }
 
-    // Get the letters corresponding to the first digit
-    const letters = digitToLetters[digits[0]];
-
-    // Recursively generate combinations for the remaining digits
-    for (let i = 0; i < letters.length; i++) {
-      generateCombinations(combination + letters[i], digits.substring(1));
-    }
+    combinations.length = 0; // Clear the combinations array
+    combinations.push(...newCombinations);
   }
 
-  const result = [];
-
-  // Call the helper function to generate letter combinations
-  generateCombinations('', digits);
-
-  // Sort the result lexicographically
-  result.sort();
-
-  return result;
+  return combinations;
 }
+
 function letterCombinations(input_digit) {
   //Complete the function
 	
